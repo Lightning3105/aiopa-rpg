@@ -6,7 +6,7 @@ var v = {
 	scrollY: 0,	
 };
 
-var game = new Phaser.Game(v.gameWidth, v.gameHeight, Phaser.CANVAS, "game");
+var game = new Phaser.Game(v.gameWidth, v.gameHeight, Phaser.AUTO, "game");
 //var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game');
 game.state.add("Boot", boot);
 game.state.add("Preload", preload);
