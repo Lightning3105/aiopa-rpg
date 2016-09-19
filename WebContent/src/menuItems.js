@@ -13,10 +13,10 @@ function labelButton(x, y, width, label, key, callback, callbackContext, style){
 	this.anchor.set(0.5, 0.5);
 	this.width = width;
 	this.height = (47 / 190) * width;
-
+	
 	this.onInputOver.add(function(){this.y += 4;}, this)
 	this.onInputOut.add(function(){this.y -= 4;}, this)
-	this.onInputDown.add(function(){this.y += 4})
+	this.onInputDown.add(function(){this.y += 4; this.key = 0})
 	
 	style = style || {
 		'font': 'Galdeano', 
@@ -25,7 +25,7 @@ function labelButton(x, y, width, label, key, callback, callbackContext, style){
 	}
 	
 	var text = new Phaser.Text(game, 0, 0, label, style);
-	while(text.height > this.height-30 && text.fontSize > 0) {  text.fontSize--;  text.updateText();}
+	while(text.height > this.height-(40/380 * width) && text.fontSize > 0) {  text.fontSize--;  text.updateText();}
 	text.anchor.set(0.5, 0.49);
 	this.addChild(text);
 };

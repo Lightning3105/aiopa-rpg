@@ -8,9 +8,9 @@ titleMenu.prototype = {
 		    this.game.add.tween(back).to({ alpha: 1 }, 1500).start();
 		    
 		    buttons = game.add.group();
-		    b = new labelButton(640, 400, 300, "New Game", 'buttonBeige', this.startGame, this)
+		    b = new labelButton(640, 400, 300, "New Game", 'button/Beige', this.startGame, this)
 		    buttons.add(b);
-		    b = new labelButton(640, 500, 300, "Options", 'buttonBeige', this.onClick, this)
+		    b = new labelButton(640, 500, 300, "Options", 'button/Beige', null, this)
 		    buttons.add(b);
 		    		    
 		    var aiopaText = game.add.sprite(640, 150, 'aiopaTitle', 0);
@@ -34,10 +34,6 @@ titleMenu.prototype = {
 		    }
 		},
 		
-		onClick: function(){
-			console.log("yes");
-		},
-		
 		render: function(){
 			game.debug.inputInfo(32, 32, 'f000000');
 		},
@@ -58,6 +54,14 @@ newGame.prototype = {
 		    var back = this.game.add.sprite(0,0, background);
 		    back.alpha = 0;
 		    this.game.add.tween(back).to({ alpha: 1 }, 1500).start();
+		    
+		    var title = game.add.text(20, 20, "Select an affinity...", {font: 'bold 50pt Galdeano', fill: 'white'})
+		    title.alpha = 0
+		    this.game.add.tween(title).to({alpha: 1}, 2000).start()
+		    
+		    this.next = new labelButton(1145, 720, 250, "Next", 'button/Blue', this.nextState(), this, {'font': 'Galdeano', 'fill': 'white', 'fontSize': '30pt'})
+		    game.add.existing(this.next)
+		    this.next.alpha = 0
 		    
 		    this.star = game.add.sprite(640, 360, "affinity/septagram")
 		    this.star.width = 600
@@ -81,7 +85,18 @@ newGame.prototype = {
 		    }
 		},
 		
-		render: function(){
-			game.debug.inputInfo(32, 32, '#ffffff');
+		update: function(){
+			if (v.selectedAffinity != null && this.next.tweened != true){
+				this.game.add.tween(this.next).to({ alpha: 1, y: 680 }, 1250).start();
+				this.next.tweened = true
+			}
 		},
+		
+		render: function(){
+			game.debug.inputInfo(1000, 32, '#ffffff');
+		},
+		
+		nextState: function(){
+			return
+		}
 }
