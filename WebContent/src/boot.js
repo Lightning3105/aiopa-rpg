@@ -13,6 +13,7 @@ boot.prototype = {
     		this.scale.pageAlignVertically = true;
     		this.scale.windowConstraints.bottom = "visual";
     		this.scale.updateLayout();
+    		this.scale.refresh();
     		}
     	else {
     		this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -23,10 +24,8 @@ boot.prototype = {
     		this.scale.pageAlignHorizontally = true;
     		this.scale.pageAlignVertically = true;
     		this.scale.forceOrientation(true, false);
-    		//this.scale.setResizeCallback(this.gameResized, this);
-    		//this.scale.enterIncorrectOrientation.add(this.enterIncorrectOrientation, this);
-    		//this.scale.leaveIncorrectOrientation.add(this.leaveIncorrectOrientation, this);
     		this.scale.updateLayout();
+    		this.scale.refresh();
     		}
 
         this.game.state.start("Preload");

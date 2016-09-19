@@ -3,7 +3,8 @@ var v = {
 	gameWidth: 1280,
 	gameHeight: 720,
 	scrollX: 0,
-	scrollY: 0,	
+	scrollY: 0,
+	selectedAffinity: null
 };
 
 var game = new Phaser.Game(v.gameWidth, v.gameHeight, Phaser.AUTO, "game");
