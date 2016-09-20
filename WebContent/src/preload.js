@@ -38,6 +38,9 @@ preload.prototype = {
         game.load.image('affinity/light', 'assets/images/affinity/light.png')
         game.load.image('affinity/septagram', 'assets/images/affinity/septagram.png')
         
+        game.load.image('gender/male', 'assets/images/gender/maleSymbol.png')
+        game.load.image('gender/female', 'assets/images/gender/femaleSymbol.png')
+        
 	},
   	create: function(){
   		game.state.start("titleMenu")

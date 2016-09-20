@@ -59,7 +59,7 @@ newGame.prototype = {
 		    title.alpha = 0
 		    this.game.add.tween(title).to({alpha: 1}, 2000).start()
 		    
-		    this.next = new labelButton(1145, 720, 250, "Next", 'button/Blue', this.nextState(), this, {'font': 'Galdeano', 'fill': 'white', 'fontSize': '30pt'})
+		    this.next = new labelButton(1145, 720, 250, "Next", 'button/Blue', this.nextState, this, {'font': 'Galdeano', 'fill': 'white', 'fontSize': '30pt'})
 		    game.add.existing(this.next)
 		    this.next.alpha = 0
 		    
@@ -87,7 +87,56 @@ newGame.prototype = {
 		
 		update: function(){
 			if (v.selectedAffinity != null && this.next.tweened != true){
-				this.game.add.tween(this.next).to({ alpha: 1, y: 680 }, 1250).start();
+				this.game.add.tween(this.next).to({ alpha: 1, y: 680 }, 1000).start();
+				this.next.tweened = true
+			}
+		},
+		
+		render: function(){
+			game.debug.inputInfo(1000, 32, '#ffffff');
+		},
+		
+		nextState: function(){
+			console.log("next state")
+			this.game.state.add("selectGender", selectGender)
+			this.game.state.start("selectGender")
+		}
+}
+
+var selectGender = function(game){}
+
+selectGender.prototype = {
+		create: function(){
+			background = gradient(game.width, game.height, "#1a1a1a", "#000000");
+		    var back = this.game.add.sprite(0,0, background);
+		    back.alpha = 0;
+		    this.game.add.tween(back).to({ alpha: 1 }, 1500).start();
+		    
+		    var title = game.add.text(20, 20, "Pick your gender...", {font: 'bold 50pt Galdeano', fill: 'white'})
+		    title.alpha = 0
+		    this.game.add.tween(title).to({alpha: 1}, 2000).start()
+		    
+		    this.next = new labelButton(1145, 720, 250, "Next", 'button/Blue', this.nextState(), this, {'font': 'Galdeano', 'fill': 'white', 'fontSize': '30pt'})
+		    game.add.existing(this.next)
+		    this.next.alpha = 0
+		    
+		    gen = new gender("male")
+		    game.add.existing(gen)
+		    gen = new gender("female")
+		    game.add.existing(gen)
+		    
+		    
+		    game.input.maxPointers = 1
+		    
+		    document.addEventListener("backbutton", function(){
+		    	game.state.start("newGame", true)
+		    }, false);
+		    
+		},
+		
+		update: function(){
+			if (v.selectedGender != null && this.next.tweened != true){
+				this.game.add.tween(this.next).to({ alpha: 1, y: 680 }, 1000).start();
 				this.next.tweened = true
 			}
 		},

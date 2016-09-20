@@ -46,7 +46,7 @@ function affinity(type){
 	this.texts = game.add.group()
 	
 	this.events.onInputOver.add(function(){
-		if (this.alpha == 1 && this.game.device.desktop){
+		if (this.alpha >= 0.8 && this.game.device.desktop){
 			game.add.tween(this).to({ width: 200, height: 200 }, 250, null, true);
 		}
 	}, this)
@@ -127,6 +127,68 @@ affinity.prototype.update = function() {
 	else if (this.width == 200 && !this.input.pointerOver(0)){
 		game.add.tween(this).to({ width: 150, height: 150 }, 250, null, true);
 		game.add.tween(this.texts).to({alpha: 0}, 200, null, true)
+		this.texts = game.add.group()
+		this.first = true
+	}
+}
+
+function gender(type){
+	Phaser.Sprite.call(this, game, 0, 0, "gender/" + type)
+	this.width = 400
+	this.height = 400
+	this.anchor.set(0.5, 0.5)
+	this.inputEnabled = true
+	this.alpha = 0.8
+	this.genType = type
+	this.first = true
+	this.texts = game.add.group()
+	
+	this.events.onInputOver.add(function(){
+		if (this.alpha >= 0.6 && this.game.device.desktop){
+			game.add.tween(this).to({ width: 500, height: 500 }, 500, null, true);
+		}
+	}, this)
+	
+	this.events.onInputDown.add(function(){
+		v.selectedGender = type
+	})
+	
+	if (type == "male"){
+		this.x = 450
+		this.y = 320
+		var offset = 0
+		this.anchor.set(0.45, 0.6)
+	}
+	if (type == "female"){
+		this.x = 830
+		this.y = 320
+		var offset = 1
+		this.anchor.set(0.5, 0.35)
+	}
+	this.game.add.tween(this).from({ width: 200, height: 200, alpha:0, x: (50 + offset*1180)}, 1500, Phaser.Easing.Quadratic.Out, true, 500).start();
+	this.game.add.existing(this)
+}
+
+gender.prototype = Object.create(Phaser.Sprite.prototype);
+gender.prototype.constructor = gender;
+gender.prototype.update = function() {
+	if (v.selectedAffinity == this.genType){
+		game.add.tween(this).to({ width: 500, height: 500 }, 500, null, true);
+	}
+	
+	if (this.input.pointerOver(0) && this.first == true && this.alpha == 0.8){
+		this.first = false
+		var style = { font: 'bold 30pt Galdeano', fill: 'white', align: 'center'}
+		var t = this.genType.charAt(0).toUpperCase() + this.genType.slice(1)
+		var text = game.add.text(this.x, 320 + 200, t, style);
+	    text.anchor.set(0.5, 0.5);
+	    text.alpha = 0
+	    game.add.tween(text).to({ y: 330, alpha: 1 }, 1000, Phaser.Easing.Quadratic.Out, true, 200);
+	    this.texts.add(text)
+	}
+	else if (this.width == 500 && !this.input.pointerOver(0)){
+		game.add.tween(this).to({ width: 400, height: 400 }, 500, null, true);
+		game.add.tween(this.texts).to({alpha: 0}, 400, null, true)
 		this.texts = game.add.group()
 		this.first = true
 	}
