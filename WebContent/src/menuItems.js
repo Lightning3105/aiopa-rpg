@@ -150,7 +150,7 @@ function gender(type){
 	}, this)
 	
 	this.events.onInputDown.add(function(){
-		v.selectedGender = type
+		v.selectedGender = type;
 	})
 	
 	if (type == "male"){
@@ -172,7 +172,7 @@ function gender(type){
 gender.prototype = Object.create(Phaser.Sprite.prototype);
 gender.prototype.constructor = gender;
 gender.prototype.update = function() {
-	if (v.selectedAffinity == this.genType){
+	if (v.selectedGender == this.genType){
 		game.add.tween(this).to({ width: 500, height: 500 }, 500, null, true);
 	}
 	
