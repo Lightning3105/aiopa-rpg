@@ -176,7 +176,7 @@ gender.prototype.update = function() {
 		game.add.tween(this).to({ width: 500, height: 500 }, 500, null, true);
 	}
 	
-	if (this.input.pointerOver(0) && this.first == true && this.alpha == 0.8){
+	if (((this.input.pointerOver(0) && this.alpha == 0.8) || v.selectedGender == this.genType) && this.first){
 		this.first = false
 		var style = { font: 'bold 30pt Galdeano', fill: 'white', align: 'center'}
 		var t = this.genType.charAt(0).toUpperCase() + this.genType.slice(1)

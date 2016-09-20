@@ -142,7 +142,7 @@ selectGender.prototype = {
 		},
 		
 		render: function(){
-			game.debug.inputInfo(1000, 32, '#ffffff');
+			game.debug.inputInfo(800, 32, '#ffffff');
 		},
 		
 		nextState: function(){
