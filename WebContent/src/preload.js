@@ -1,16 +1,5 @@
 var preload = function(game){}
 
-var WebFontConfig = {
-    active: function() { 
-    	console.log("fonts loaded");
-    	},
-
-    google: {
-      families: ['Galdeano']
-    }
-};
-
-
 preload.prototype = {
 	preload: function(){ 
 		var text = "Loading Game";
@@ -21,9 +10,7 @@ preload.prototype = {
         var style = { font: "30px Arial", fill: "#ffffff", align: "center" };
         this.loadingText = game.add.text(game.world.centerX, game.world.centerY + 60, "0%", style)
         this.loadingText.anchor.set(0.5);
-        
-        game.load.script('webfont', 'src/webfont.js');
-        
+                
         game.load.spritesheet('button/Beige', 'assets/images/button/beige.png', 190, 49);
         game.load.spritesheet('button/Blue', 'assets/images/button/blue.png', 190, 49);
         game.load.spritesheet('aiopaTitle', 'assets/images/Aiopa Title.png', 262, 110);
