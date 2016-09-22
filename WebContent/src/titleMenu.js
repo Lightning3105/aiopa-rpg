@@ -116,7 +116,9 @@ selectGender.prototype = {
 		    title.alpha = 0
 		    this.game.add.tween(title).to({alpha: 1}, 2000).start()
 		    
-		    this.next = new labelButton(1145, 720, 250, "Next", 'button/Blue', this.nextState(), this, {'font': 'Galdeano', 'fill': 'white', 'fontSize': '30pt'})
+		    this.next = new labelButton(1145, 720, 250, "Next", 'button/Blue', function(){
+		    	game.state.start("theGame", true)
+		    }, this, {'font': 'Galdeano', 'fill': 'white', 'fontSize': '30pt'})
 		    game.add.existing(this.next)
 		    this.next.alpha = 0
 		    
@@ -146,6 +148,8 @@ selectGender.prototype = {
 		},
 		
 		nextState: function(){
-			return
+			if (this.next != undefined){
+				game.state.start("theGame", true)
+			}
 		}
 }

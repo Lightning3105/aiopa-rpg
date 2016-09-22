@@ -4,6 +4,7 @@ var v = {
 	gameHeight: 720,
 	scrollX: 0,
 	scrollY: 0,
+	scale: 1,
 	selectedAffinity: null,
 	selectedGender: null
 };

@@ -28,6 +28,12 @@ preload.prototype = {
         game.load.image('gender/male', 'assets/images/gender/maleSymbol.png')
         game.load.image('gender/female', 'assets/images/gender/femaleSymbol.png')
         
+        game.load.spritesheet('tile/outside', 'assets/images/tile/outside.png', 16, 16, -1, 0, 1)
+        
+        game.load.image('control/compass', 'assets/images/control/compass_rose.png')
+        game.load.image('control/touch_segment', 'assets/images/control/touch_segment.png')
+        game.load.image('control/touch', 'assets/images/control/touch.png')
+        
 	},
   	create: function(){
   		game.state.start("titleMenu")
