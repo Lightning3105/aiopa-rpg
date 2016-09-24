@@ -35,6 +35,8 @@ titleMenu.prototype = {
 		},
 		
 		render: function(){
+			game.debug.renderShadow = false
+	    	game.debug.font = '20px Courier'
 			game.debug.inputInfo(32, 32, 'f000000');
 		},
 		

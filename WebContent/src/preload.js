@@ -34,6 +34,8 @@ preload.prototype = {
         game.load.image('control/touch_segment', 'assets/images/control/touch_segment.png')
         game.load.image('control/touch', 'assets/images/control/touch.png')
         
+        game.load.spritesheet('defaultCharacter', 'assets/images/defaultCharacter.png', 24, 32)
+        
 	},
   	create: function(){
   		game.state.start("titleMenu")

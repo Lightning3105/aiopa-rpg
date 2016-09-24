@@ -16,39 +16,84 @@ theGame.prototype = {
 			this.game.touchControl = this.game.plugins.add(Phaser.Plugin.TouchControl);
             this.game.touchControl.inputEnable();
             this.game.touchControl.settings.maxDistanceInPixels = 100
+            
+            player = new player(this.game)
 		},
 	    
 	    render: function(){
+	    	game.debug.renderShadow = false
+	    	game.debug.font = '20px Courier'
+	    	game.debug.text("FPS: " + game.time.fps, 20, 30, "red")
 	    },
 	    
 	    update: function(){
 	    	var speed = this.game.touchControl.speed;
-            var delay=0;
-
             
-            v.scrollX -= easeInSpeed(speed.x)
-            v.scrollY += easeInSpeed(speed.y)
-            //console.log(easeInSpeed(speed.x), easeInSpeed(speed.y))
+            //v.scrollX -= easeInSpeed(speed.x)
+            //v.scrollY += easeInSpeed(speed.y)
+	    	
+	    	v.velX -= easeInSpeed(speed.x) * 0.1
+            v.velY += easeInSpeed(speed.y) * 0.1
+	    	
             
+            var pressX = false
+            var pressY = false
             if (game.input.keyboard.isDown(Phaser.Keyboard.A)){
-	    		v.scrollX -= 5
+	    		v.velX -= v.player.speed * 0.1
+	    		var pressX = true
 	    	}
 	    	if (game.input.keyboard.isDown(Phaser.Keyboard.D)){
-	    		v.scrollX += 5
+	    		v.velX += v.player.speed * 0.1
+	    		var pressX = true
 	    	}
 	    	if (game.input.keyboard.isDown(Phaser.Keyboard.W)){
-	    		v.scrollY += 5
+	    		v.velY += v.player.speed * 0.1
+	    		var pressY = true
 	    	}
 	    	if (game.input.keyboard.isDown(Phaser.Keyboard.S)){
-	    		v.scrollY -= 5
+	    		v.velY -= v.player.speed * 0.1
+	    		var pressY = true
 	    	}
+	    	if (speed.x != 0){
+	    		var pressX = true
+	    	}
+	    	if (speed.y != 0){
+	    		var pressY = true
+	    	}
+	    	
+	    	if ((v.velX > v.player.speed && v.velX > 0) || (v.velX < -v.player.speed && v.velX < 0)){
+	    		v.velX = v.player.speed * Math.sign(v.velX)
+	    	}
+	    	if ((v.velY > v.player.speed && v.velY > 0) || (v.velY < -v.player.speed && v.velY < 0)){
+	    		v.velY = v.player.speed * Math.sign(v.velY)
+	    	}
+	    	
+	    	if (pressX == false){
+	    		if ((v.velX > -0.5 && v.velX < 0) || (v.velX < 0.5 && v.velX > 0)){
+	    			v.velX = 0
+	    		}
+	    		else{
+	    			v.velX -= 0.5 * Math.sign(v.velX)
+	    		}
+	    	}
+	    	if (pressY == false){
+	    		if ((v.velY > -0.5 && v.velY < 0) || (v.velY < 0.5 && v.velY > 0)){
+	    			v.velY = 0
+	    		}
+	    		else {
+	    			v.velY -= 0.5 * Math.sign(v.velY)
+	    		}
+	    	}
+	    	
+	    	v.scrollX += v.velX
+	    	v.scrollY += v.velY
+	    	
 	    	checkMap()
 	    	
 	    	game.input.mouse.mouseWheelCallback = mouseWheel;
 	    	function mouseWheel(event) {
 	    		if (game.input.mouse.wheelDelta == Phaser.Mouse.WHEEL_UP){
 	    			v.scale += 0.1
-	    			//var scalePoint = [1280/2, 720/2]
 	    			var scalePoint = [640, 360]
 	    			offsetX = -((scalePoint[0]/v.scale) - (scalePoint[0]/(v.scale - 0.1)))
 	    			offsetY = ((scalePoint[1]/v.scale) - (scalePoint[1]/(v.scale - 0.1)))
@@ -66,37 +111,10 @@ theGame.prototype = {
 		    			offsetY = ((scalePoint[1]/v.scale) - (scalePoint[1]/(v.scale + 0.1)))
 		    			v.scrollX += offsetX
 		    			v.scrollY += offsetY
-		    			console.log(offsetX, offsetY)
 	    			}
 	    		}
 	    		checkMap()
 	    	}
-            //this.tilesprite.tilePosition.y += easeInSpeed(speed.y);
-            //this.tilesprite.tilePosition.x += easeInSpeed(speed.x);
-            // Also you could try linear speed;
-            //this.tilesprite.tilePosition.y += this.game.touchControl.speed.y / 20;
-            //this.tilesprite.tilePosition.x += this.game.touchControl.speed.x / 20;
-
-            /*if (Math.abs(speed.y) < Math.abs(speed.x)){
-                delay = parseInt(1000 / Math.abs((easeInSpeed(speed.x)) * 10), 10);
-
-                // moving mainly right or left
-                if (this.game.touchControl.cursors.left) {
-                    this.character.play('walkLeft');
-                } else if (this.game.touchControl.cursors.right) {
-                    this.character.play('walkRight');
-                }
-            } else if (Math.abs(speed.y) > Math.abs(speed.x)){
-                delay = parseInt(1000 / Math.abs((easeInSpeed(speed.y)) * 10), 10);
-                // moving mainly up or down
-                if (this.game.touchControl.cursors.up) {
-                    this.character.play('walkUp');
-                } else if (this.game.touchControl.cursors.down) {
-                    this.character.play('walkDown');
-                }
-            } else {
-                this.character.animations.stop(0, true);
-            } */
 	    }
 }
 
@@ -104,11 +122,10 @@ var easeInSpeed = function(x){
     //return x * Math.abs(x) / 2000;
 	//5 = player speed
 	//99 = touch control max speed
-	return x * Math.abs(x) / (99 / (5 / 99));
+	return x * Math.abs(x) / (99 / (v.player.speed / 99));
 };
 
 function checkMap(){
-	console.log(v.scrollX, v.scrollY)
     if (v.scrollX < 0){
   	  v.scrollX = 0
     }

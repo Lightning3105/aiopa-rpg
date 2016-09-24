@@ -4,9 +4,14 @@ var v = {
 	gameHeight: 720,
 	scrollX: 0,
 	scrollY: 0,
+	velX: 0,
+	velY: 0,
 	scale: 2,
 	selectedAffinity: null,
-	selectedGender: null
+	selectedGender: null,
+	player: {
+		speed: 3,
+	}
 };
 //					  ( width , height , renderer , parent , state , transparent , anti alias , physicsConfig )
 game = new Phaser.Game(v.gameWidth, v.gameHeight, Phaser.AUTO, "game", null, null, true, null);

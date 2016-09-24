@@ -27,6 +27,9 @@ boot.prototype = {
     		this.scale.updateLayout();
     		this.scale.refresh();
     		}
+    	
+    	game.time.desiredFps = 60
+    	game.time.advancedTiming = true
 
         this.game.state.start("Preload");
     }
