@@ -12,8 +12,10 @@ theGame.prototype = {
 				}
 			}
 			
+			game.input.maxPointers = 2
 			this.game.touchControl = this.game.plugins.add(Phaser.Plugin.TouchControl);
             this.game.touchControl.inputEnable();
+            this.game.touchControl.settings.maxDistanceInPixels = 100
 		},
 	    
 	    render: function(){
@@ -25,7 +27,50 @@ theGame.prototype = {
 
             
             v.scrollX -= easeInSpeed(speed.x)
-            v.scrollY -= easeInSpeed(speed.y)
+            v.scrollY += easeInSpeed(speed.y)
+            //console.log(easeInSpeed(speed.x), easeInSpeed(speed.y))
+            
+            if (game.input.keyboard.isDown(Phaser.Keyboard.A)){
+	    		v.scrollX -= 5
+	    	}
+	    	if (game.input.keyboard.isDown(Phaser.Keyboard.D)){
+	    		v.scrollX += 5
+	    	}
+	    	if (game.input.keyboard.isDown(Phaser.Keyboard.W)){
+	    		v.scrollY += 5
+	    	}
+	    	if (game.input.keyboard.isDown(Phaser.Keyboard.S)){
+	    		v.scrollY -= 5
+	    	}
+	    	checkMap()
+	    	
+	    	game.input.mouse.mouseWheelCallback = mouseWheel;
+	    	function mouseWheel(event) {
+	    		if (game.input.mouse.wheelDelta == Phaser.Mouse.WHEEL_UP){
+	    			v.scale += 0.1
+	    			//var scalePoint = [1280/2, 720/2]
+	    			var scalePoint = [640, 360]
+	    			offsetX = -((scalePoint[0]/v.scale) - (scalePoint[0]/(v.scale - 0.1)))
+	    			offsetY = ((scalePoint[1]/v.scale) - (scalePoint[1]/(v.scale - 0.1)))
+	    			v.scrollX += offsetX
+	    			v.scrollY += offsetY
+	    		}
+	    		else if (game.input.mouse.wheelDelta == Phaser.Mouse.WHEEL_DOWN){
+	    			v.scale -= 0.1
+	    			if (v.width * 30 * v.scale < v.gameWidth || v.height * 30 * v.scale < v.gameHeight){
+	    				v.scale += 0.1
+	    			}
+	    			else{
+	    				var scalePoint = [640, 360]
+		    			offsetX = -((scalePoint[0]/v.scale) - (scalePoint[0]/(v.scale + 0.1)))
+		    			offsetY = ((scalePoint[1]/v.scale) - (scalePoint[1]/(v.scale + 0.1)))
+		    			v.scrollX += offsetX
+		    			v.scrollY += offsetY
+		    			console.log(offsetX, offsetY)
+	    			}
+	    		}
+	    		checkMap()
+	    	}
             //this.tilesprite.tilePosition.y += easeInSpeed(speed.y);
             //this.tilesprite.tilePosition.x += easeInSpeed(speed.x);
             // Also you could try linear speed;
@@ -56,5 +101,18 @@ theGame.prototype = {
 }
 
 var easeInSpeed = function(x){
-    return x * Math.abs(x) / 2000;
+    //return x * Math.abs(x) / 2000;
+	//5 = player speed
+	//99 = touch control max speed
+	return x * Math.abs(x) / (99 / (5 / 99));
 };
+
+function checkMap(){
+	console.log(v.scrollX, v.scrollY)
+    if (v.scrollX < 0){
+  	  v.scrollX = 0
+    }
+    if (v.scrollY > 0){
+  	  v.scrollY = 0
+    }
+}

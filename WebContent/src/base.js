@@ -4,12 +4,12 @@ var v = {
 	gameHeight: 720,
 	scrollX: 0,
 	scrollY: 0,
-	scale: 1,
+	scale: 2,
 	selectedAffinity: null,
 	selectedGender: null
 };
-
-game = new Phaser.Game(v.gameWidth, v.gameHeight, Phaser.AUTO, "game");
+//					  ( width , height , renderer , parent , state , transparent , anti alias , physicsConfig )
+game = new Phaser.Game(v.gameWidth, v.gameHeight, Phaser.AUTO, "game", null, null, true, null);
 //var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game');
 game.state.add("Boot", boot);
 game.state.add("Preload", preload);
