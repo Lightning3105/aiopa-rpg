@@ -41,6 +41,8 @@
 		this.input = this.game.input;
 
 		this.imageGroup = [];
+		
+		this.open = false
 
 		this.imageGroup.push(this.game.add.sprite(0, 0, 'control/compass'));
 		this.imageGroup.push(this.game.add.sprite(0, 0, 'control/touch_segment'));
@@ -85,6 +87,7 @@
 
 	var initialPoint;
 	var createCompass = function(){
+		this.open = true
 		this.imageGroup.forEach(function (e) {
 			e.visible=true;
 			e.bringToTop();
@@ -97,9 +100,11 @@
 		this.preUpdate=setDirection.bind(this);
 
 		initialPoint=this.input.activePointer.position.clone();
+		this.initialPoint = initialPoint;
 
 	};
 	var removeCompass = function () {
+		this.open = false
 		this.imageGroup.forEach(function(e){
 			e.visible = false;
 		});

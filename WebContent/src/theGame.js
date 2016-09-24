@@ -27,67 +27,7 @@ theGame.prototype = {
 	    },
 	    
 	    update: function(){
-	    	var speed = this.game.touchControl.speed;
-            
-            //v.scrollX -= easeInSpeed(speed.x)
-            //v.scrollY += easeInSpeed(speed.y)
-	    	
-	    	v.velX -= easeInSpeed(speed.x) * 0.1
-            v.velY += easeInSpeed(speed.y) * 0.1
-	    	
-            
-            var pressX = false
-            var pressY = false
-            if (game.input.keyboard.isDown(Phaser.Keyboard.A)){
-	    		v.velX -= v.player.speed * 0.1
-	    		var pressX = true
-	    	}
-	    	if (game.input.keyboard.isDown(Phaser.Keyboard.D)){
-	    		v.velX += v.player.speed * 0.1
-	    		var pressX = true
-	    	}
-	    	if (game.input.keyboard.isDown(Phaser.Keyboard.W)){
-	    		v.velY += v.player.speed * 0.1
-	    		var pressY = true
-	    	}
-	    	if (game.input.keyboard.isDown(Phaser.Keyboard.S)){
-	    		v.velY -= v.player.speed * 0.1
-	    		var pressY = true
-	    	}
-	    	if (speed.x != 0){
-	    		var pressX = true
-	    	}
-	    	if (speed.y != 0){
-	    		var pressY = true
-	    	}
-	    	
-	    	if ((v.velX > v.player.speed && v.velX > 0) || (v.velX < -v.player.speed && v.velX < 0)){
-	    		v.velX = v.player.speed * Math.sign(v.velX)
-	    	}
-	    	if ((v.velY > v.player.speed && v.velY > 0) || (v.velY < -v.player.speed && v.velY < 0)){
-	    		v.velY = v.player.speed * Math.sign(v.velY)
-	    	}
-	    	
-	    	if (pressX == false){
-	    		if ((v.velX > -0.5 && v.velX < 0) || (v.velX < 0.5 && v.velX > 0)){
-	    			v.velX = 0
-	    		}
-	    		else{
-	    			v.velX -= 0.5 * Math.sign(v.velX)
-	    		}
-	    	}
-	    	if (pressY == false){
-	    		if ((v.velY > -0.5 && v.velY < 0) || (v.velY < 0.5 && v.velY > 0)){
-	    			v.velY = 0
-	    		}
-	    		else {
-	    			v.velY -= 0.5 * Math.sign(v.velY)
-	    		}
-	    	}
-	    	
-	    	v.scrollX += v.velX
-	    	v.scrollY += v.velY
-	    	
+	    	move()
 	    	checkMap()
 	    	
 	    	game.input.mouse.mouseWheelCallback = mouseWheel;
@@ -132,4 +72,73 @@ function checkMap(){
     if (v.scrollY > 0){
   	  v.scrollY = 0
     }
+}
+
+function move(){
+	var pressX = false
+    var pressY = false
+	if (game.touchControl.open){
+		if (game.touchControl.initialPoint.x < 640){
+			var speed = this.game.touchControl.speed;
+			v.velX -= easeInSpeed(speed.x) * 0.1
+		    v.velY += easeInSpeed(speed.y) * 0.1
+		    
+		    if (speed.x != 0){
+				pressX = true
+			}
+			if (speed.y != 0){
+				pressY = true
+			}
+		}
+		else{
+			console.log("HIDE")
+			game.touchControl.imageGroup.forEach(function(e){
+		    	e.visible = false
+		    })
+		}
+	}
+	    
+    if (game.input.keyboard.isDown(Phaser.Keyboard.A)){
+		v.velX -= v.player.speed * 0.1
+		var pressX = true
+	}
+	if (game.input.keyboard.isDown(Phaser.Keyboard.D)){
+		v.velX += v.player.speed * 0.1
+		var pressX = true
+	}
+	if (game.input.keyboard.isDown(Phaser.Keyboard.W)){
+		v.velY += v.player.speed * 0.1
+		var pressY = true
+	}
+	if (game.input.keyboard.isDown(Phaser.Keyboard.S)){
+		v.velY -= v.player.speed * 0.1
+		var pressY = true
+	}
+	
+	if ((v.velX > v.player.speed && v.velX > 0) || (v.velX < -v.player.speed && v.velX < 0)){
+		v.velX = v.player.speed * Math.sign(v.velX)
+	}
+	if ((v.velY > v.player.speed && v.velY > 0) || (v.velY < -v.player.speed && v.velY < 0)){
+		v.velY = v.player.speed * Math.sign(v.velY)
+	}
+	
+	if (pressX == false){
+		if ((v.velX > -0.5 && v.velX < 0) || (v.velX < 0.5 && v.velX > 0)){
+			v.velX = 0
+		}
+		else{
+			v.velX -= 0.5 * Math.sign(v.velX)
+		}
+	}
+	if (pressY == false){
+		if ((v.velY > -0.5 && v.velY < 0) || (v.velY < 0.5 && v.velY > 0)){
+			v.velY = 0
+		}
+		else {
+			v.velY -= 0.5 * Math.sign(v.velY)
+		}
+	}
+	
+	v.scrollX += v.velX
+	v.scrollY += v.velY
 }
