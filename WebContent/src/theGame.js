@@ -82,11 +82,12 @@ function move(){
 			var speed = this.game.touchControl.speed;
 			v.velX -= easeInSpeed(speed.x) * 0.1
 		    v.velY += easeInSpeed(speed.y) * 0.1
+		    console.log(easeInSpeed(speed.x) * 0.1, easeInSpeed(speed.y) * 0.1)
 		    
-		    if (speed.x != 0){
+		    if (Math.abs(easeInSpeed(speed.x) * 0.1) >= 0.05){
 				pressX = true
 			}
-			if (speed.y != 0){
+			if (Math.abs(easeInSpeed(speed.y) * 0.1) >= 0.05){
 				pressY = true
 			}
 		}
