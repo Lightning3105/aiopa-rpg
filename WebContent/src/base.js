@@ -1,5 +1,5 @@
 var v = {
-	debug: true,
+	debug: false,
 	debugGui: null,
 	spriteDebug: null,
 	scale: 1,

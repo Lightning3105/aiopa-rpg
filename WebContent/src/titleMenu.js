@@ -32,12 +32,22 @@ titleMenu.prototype = {
 		    	game.add.tween(b).to({ y: yCur }, 500, null, true, 1950 + i*150);
 		    	game.add.tween(b).to({ alpha: 1 }, 500, null, true, 1950 + i*150);
 		    }
+		    
+		    l = game.input.keyboard.addKey(Phaser.Keyboard.L)
+		    l.onDown.add(function(){
+		    	if (game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
+		    		v.debug = !v.debug;
+		    		game.debug.reset()
+		    	}
+		    }, this)
 		},
 		
 		render: function(){
-			game.debug.renderShadow = false
-	    	game.debug.font = '20px Courier'
-			game.debug.inputInfo(32, 32, 'f000000');
+			if (v.debug){
+				game.debug.renderShadow = false
+		    	game.debug.font = '20px Courier'
+				game.debug.inputInfo(32, 32, 'f000000');
+			}
 		},
 		
 		startGame: function(){
@@ -77,7 +87,6 @@ newGame.prototype = {
 		    document.addEventListener("backbutton", function(){
 		    	game.state.start("titleMenu", true)
 		    });
-		    
 		    
 		    var affinities = game.add.group()
 		    var aff = ["air", "fire", "water", "earth", "time", "light", "dark"]

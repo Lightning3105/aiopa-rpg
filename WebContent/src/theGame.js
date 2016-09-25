@@ -19,21 +19,23 @@ theGame.prototype = {
             
             player = new player(this.game)
             
-            if (this.game.device.desktop){
+            if (v.debug){
             	addDebugs()
             }
             
 		},
 	    
 	    render: function(){
-	    	game.debug.renderShadow = false
-	    	game.debug.font = '30px Courier bold'
-	    	game.debug.lineHeight = 30
-	    	this.game.debug.start(20, 40, 'red');
-	    	this.game.debug.line("FPS: " + game.time.fps);
-	    	this.game.debug.line("ScrollX: " + v.scrollX);
-	    	this.game.debug.line("ScrollY: " + v.scrollY);
-	    	this.game.debug.stop();
+	    	if (v.debug){
+		    	game.debug.renderShadow = false
+		    	game.debug.font = '30px Courier bold'
+		    	game.debug.lineHeight = 30
+		    	this.game.debug.start(20, 40, 'red');
+		    	this.game.debug.line("FPS: " + game.time.fps);
+		    	this.game.debug.line("ScrollX: " + v.scrollX);
+		    	this.game.debug.line("ScrollY: " + v.scrollY);
+		    	this.game.debug.stop();
+	    	}
 	    },
 	    
 	    update: function(){
