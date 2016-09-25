@@ -1,4 +1,7 @@
 var v = {
+	debug: true,
+	debugGui: null,
+	spriteDebug: null,
 	scale: 1,
 	gameWidth: 1280,
 	gameHeight: 720,
@@ -13,7 +16,8 @@ var v = {
 	selectedGender: null,
 	player: {
 		speed: 3,
-	}
+	},
+
 };
 //					  ( width , height , renderer , parent , state , transparent , anti alias , physicsConfig )
 game = new Phaser.Game(v.gameWidth, v.gameHeight, Phaser.AUTO, "game", null, null, true, null);

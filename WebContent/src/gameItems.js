@@ -8,6 +8,8 @@ function tile(pos, sheet, frame, wall, terrain){
 	this.x = (-v.scrollX + (this.position[0] * 50)) * v.scale
 	this.y = (v.scrollY + (this.position[1] * 50)) * v.scale
 	this.smoothed = false //anti aliasing
+	
+	spriteDebug(this)
 }
 
 tile.prototype = Object.create(Phaser.Sprite.prototype);
@@ -43,6 +45,8 @@ function player(game){
 	this.animations.add("walkLeft", [11, 10, 9, 10], 4)
 	this.animations.add("walkUp", [2, 1, 0, 1], 4)
 	this.animations.add("walkDown", [8, 7, 6, 7], 4)
+	
+	spriteDebug(this)
 }
 
 player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -80,4 +84,23 @@ player.prototype.update = function() {
 	    this.animations.stop(0, true);
 	    this.frame = 7
 	} 
+}
+
+function spriteDebug(spr){
+	if (v.debug == true){
+		spr.inputEnabled = true
+		spr.events.onInputDown.add(function(){
+			if (game.input.keyboard.isDown(Phaser.Keyboard.L)){
+				if (v.spriteDebug != null){
+					v.spriteDebug.destroy()
+				}
+				v.spriteDebug = new dat.GUI();
+				v.spriteDebug.add(spr, 'x').listen()
+				v.spriteDebug.add(spr, 'y').listen()
+				v.spriteDebug.add(spr, 'width').listen()
+				v.spriteDebug.add(spr, 'height').listen()
+				v.spriteDebug.add(spr, 'frame').listen()
+			}
+		}, spr)
+	}
 }

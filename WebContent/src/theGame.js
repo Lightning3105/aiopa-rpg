@@ -18,6 +18,11 @@ theGame.prototype = {
             this.game.touchControl.settings.maxDistanceInPixels = 100
             
             player = new player(this.game)
+            
+            if (this.game.device.desktop){
+            	addDebugs()
+            }
+            
 		},
 	    
 	    render: function(){
@@ -188,4 +193,11 @@ function move(){
 	v.playerX = parseInt(v.playerX.toFixed(2))
 	v.playerY = parseInt(v.playerY.toFixed(2))
 
+}
+
+function addDebugs(){
+	v.debugGui = new dat.GUI();
+    v.debugGui.add(v, 'scrollX', 0, 2500).listen();
+    v.debugGui.add(v, 'scrollY', 0, -2500).listen();
+    v.debugGui.add(v, 'scale', 0.1, 5).listen();
 }
