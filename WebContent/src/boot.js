@@ -14,6 +14,7 @@ boot.prototype = {
     		this.scale.windowConstraints.bottom = "visual";
     		this.scale.updateLayout();
     		this.scale.refresh();
+    		game.add.plugin(Phaser.Plugin.Debug);
     		}
     	else {
     		this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;

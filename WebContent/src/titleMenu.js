@@ -76,7 +76,8 @@ newGame.prototype = {
 		    
 		    document.addEventListener("backbutton", function(){
 		    	game.state.start("titleMenu", true)
-		    }, false);
+		    });
+		    
 		    
 		    var affinities = game.add.group()
 		    var aff = ["air", "fire", "water", "earth", "time", "light", "dark"]
