@@ -22,8 +22,13 @@ theGame.prototype = {
 	    
 	    render: function(){
 	    	game.debug.renderShadow = false
-	    	game.debug.font = '20px Courier'
-	    	game.debug.text("FPS: " + game.time.fps, 20, 30, "red")
+	    	game.debug.font = '30px Courier bold'
+	    	game.debug.lineHeight = 30
+	    	this.game.debug.start(20, 40, 'red');
+	    	this.game.debug.line("FPS: " + game.time.fps);
+	    	this.game.debug.line("ScrollX: " + v.scrollX);
+	    	this.game.debug.line("ScrollY: " + v.scrollY);
+	    	this.game.debug.stop();
 	    },
 	    
 	    update: function(){
@@ -66,12 +71,24 @@ var easeInSpeed = function(x){
 };
 
 function checkMap(){
+	//2500 = 50 * 50, mapsize * tilesize
     if (v.scrollX < 0){
-  	  v.scrollX = 0
+    	v.playerX += v.scrollX
+  	  	v.scrollX = 0
+    }
+	if (v.scrollX > 2500 - 1280 / v.scale){
+    	v.playerX += v.scrollX - (2500 - 1280 / v.scale)
+  	  	v.scrollX = 2500 - 1280 / v.scale
     }
     if (v.scrollY > 0){
-  	  v.scrollY = 0
+    	v.playerY -= v.scrollY
+  	  	v.scrollY = 0
     }
+    if (v.scrollY < -2500 + 720 / v.scale){
+    	v.playerY -= v.scrollY - (-2500 + 720 / v.scale)
+  	  	v.scrollY = -2500 + 720 / v.scale
+    }
+    
 }
 
 function move(){
@@ -82,7 +99,6 @@ function move(){
 			var speed = this.game.touchControl.speed;
 			v.velX -= easeInSpeed(speed.x) * 0.1
 		    v.velY += easeInSpeed(speed.y) * 0.1
-		    console.log(easeInSpeed(speed.x) * 0.1, easeInSpeed(speed.y) * 0.1)
 		    
 		    if (Math.abs(easeInSpeed(speed.x) * 0.1) >= 0.05){
 				pressX = true
@@ -140,6 +156,36 @@ function move(){
 		}
 	}
 	
-	v.scrollX += v.velX
-	v.scrollY += v.velY
+	if (v.playerX < 0) {
+		v.playerX += v.velX
+	}
+	else if (v.playerX > 0){
+		v.playerX += v.velX
+	}
+	else{
+		v.scrollX += v.velX
+	}
+	if (v.playerX != 0){
+		v.scrollX += v.playerX
+		v.playerX = 0
+	}
+	
+	if (v.playerY < 0) {
+		v.playerY -= v.velY
+	}
+	else if (v.playerY > 0){
+		v.playerY -= v.velY
+	}
+	else{
+		v.scrollY += v.velY
+	}
+	if (v.playerY != 0){
+		v.scrollY -= v.playerY
+		v.playerY = 0
+	}
+	v.scrollX = parseInt(v.scrollX.toFixed(2))
+	v.scrollY = parseInt(v.scrollY.toFixed(2))
+	v.playerX = parseInt(v.playerX.toFixed(2))
+	v.playerY = parseInt(v.playerY.toFixed(2))
+
 }

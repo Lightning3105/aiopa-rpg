@@ -30,7 +30,7 @@ tile.prototype.update = function() {
 }
 
 function player(game){
-	Phaser.Sprite.call(this, game, 640, 360, 'defaultCharacter', 7)
+	Phaser.Sprite.call(this, game, 640 + v.playerX, 360 + v.playerY, 'defaultCharacter', 7)
 	this.game = game
 	this.anchor.set(0.5, 1)
 	game.add.existing(this)
@@ -48,6 +48,11 @@ function player(game){
 player.prototype = Object.create(Phaser.Sprite.prototype);
 player.prototype.constructor = player;
 player.prototype.update = function() {
+	this.x = 640 + v.playerX
+	this.y = 360 + v.playerY
+	this.height = 80 * v.scale
+	this.width = 60 * v.scale
+	
 	var speed = {x: v.velX, y: v.velY}//game.touchControl.speed;
 	var delay = 0;
 	if (speed.x == 0 && speed.y == 0){
