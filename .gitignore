@@ -3,3 +3,6 @@
 /.tern-project
 www/src/cordova.js
 www/assets/images/RAW/
+/platforms/
+/node_modules/
+/plugins/
