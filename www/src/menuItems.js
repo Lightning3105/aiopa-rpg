@@ -193,3 +193,42 @@ gender.prototype.update = function() {
 		this.first = true
 	}
 }
+
+function snow(){
+	back_emitter = game.add.emitter(game.world.centerX, 0, 600);
+    back_emitter.makeParticles('title/sparks', [0, 1, 2, 3]);
+    back_emitter.maxParticleScale = 0.6;
+    back_emitter.minParticleScale = 0.2;
+    back_emitter.setYSpeed(10, 30);
+    back_emitter.setXSpeed(-5, 5);
+    back_emitter.gravity = 10;
+    back_emitter.width = game.world.width * 1.5;
+    back_emitter.minRotation = -90;
+    back_emitter.maxRotation = 90;
+
+    mid_emitter = game.add.emitter(game.world.centerX, 0, 300);
+    mid_emitter.makeParticles('title/sparks', [0, 1, 2, 3]);
+    mid_emitter.maxParticleScale = 1.2;
+    mid_emitter.minParticleScale = 0.8;
+    mid_emitter.setYSpeed(20, 40);
+    mid_emitter.setXSpeed(-10, 10);
+    mid_emitter.gravity = 20;
+    mid_emitter.width = game.world.width * 1.5;
+    mid_emitter.minRotation = -90;
+    mid_emitter.maxRotation = 90;
+
+    front_emitter = game.add.emitter(game.world.centerX, 0, 150);
+    front_emitter.makeParticles('title/sparks', [0, 1, 2, 3]);
+    front_emitter.maxParticleScale = 1;
+    front_emitter.minParticleScale = 0.5;
+    front_emitter.setYSpeed(30, 50);
+    front_emitter.setXSpeed(-15, 15);
+    front_emitter.gravity = 30;
+    front_emitter.width = game.world.width * 1.5;
+    front_emitter.minRotation = -90;
+    front_emitter.maxRotation = 90;
+    
+    back_emitter.start(false, 14000, 20);
+    mid_emitter.start(false, 12000, 40);
+    front_emitter.start(false, 6000, 1000);
+}

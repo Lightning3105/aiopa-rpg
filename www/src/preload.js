@@ -36,8 +36,11 @@ preload.prototype = {
                 
         game.load.spritesheet('button/Beige', 'assets/images/button/beige.png', 190, 49);
         game.load.spritesheet('button/Blue', 'assets/images/button/blue.png', 190, 49);
-        game.load.spritesheet('aiopaTitle', 'assets/images/Aiopa Title.png', 262, 110);
         game.load.video('logo', 'assets/images/Lightopa Games Intro.mp4')
+        
+        game.load.image('title/background', 'assets/images/title/starback.png')
+        game.load.spritesheet('title/sparks', 'assets/images/title/sparks.png', 12, 12)
+        //game.load.image('title/star1', 'assets/images/title/star1.png')
         
         game.load.image('affinity/air', 'assets/images/affinity/air.png')
         game.load.image('affinity/water', 'assets/images/affinity/water.png')

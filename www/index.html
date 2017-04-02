@@ -22,6 +22,7 @@
         <script src="src/preload.js"></script>
         <script src="src/titleMenu.js"></script>
         <script src="src/theGame.js"></script>
+
         <style>
             body {
                 margin: 0;
@@ -33,12 +34,20 @@
                 font-weight: normal;
                 font-style: normal;
                 }
+            @font-face {
+                font-family: 'Chancery';
+                src: url('assets/fonts/blackchancery.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+                }
         </style>
     </head>
     
     <body>
         <div style="font-family:Galdeano; visibility: hidden; position:absolute; left:-10000px">f</div>
+        <div style="font-family:Chancery; visibility: hidden; position:absolute; left:-10000px">f</div>
         <div id="game"></div>
         <script type="text/javascript" src="src/base.js"></script>
+        
     </body>
 </html>

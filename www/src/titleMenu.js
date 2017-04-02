@@ -2,10 +2,8 @@ var titleMenu = function(game){}
 
 titleMenu.prototype = {
 		create: function(){
-			background = gradient(game.width, game.height, "#00ff00", "#00ffff");
-		    var back = this.game.add.sprite(0,0, background);
-		    back.alpha = 0;
-		    this.game.add.tween(back).to({ alpha: 1 }, 1500).start();
+			game.add.image(0, 0, 'title/background');
+			snow()
 		    
 		    buttons = game.add.group();
 		    b = new labelButton(640, 400, 300, "New Game", 'button/Beige', this.startGame, this)
@@ -13,14 +11,10 @@ titleMenu.prototype = {
 		    b = new labelButton(640, 500, 300, "Options", 'button/Beige', null, this)
 		    buttons.add(b);
 		    		    
-		    var aiopaText = game.add.sprite(640, 150, 'aiopaTitle', 0);
+		    var aiopaText = game.add.text(640, 150, 'Aiopa', {font:"Chancery", fontSize: 180, fill: "#dcdcdc"});
 		    aiopaText.anchor.set(0.5, 0.5);
-		    aiopaText.width = 500;
-		    aiopaText.height = 110/262 * aiopaText.width;
 		    aiopaText.alpha = 0;
 		    game.add.tween(aiopaText).to({ alpha: 1 }, 500, null, true, 1250);
-		    this.shimmer = aiopaText.animations.add('shimmer');
-		    this.shimmer.play(15, true, false);
 		    
 		    game.input.maxPointers = 1
 		    
