@@ -17,6 +17,7 @@ boot.prototype = {
     		game.add.plugin(Phaser.Plugin.Debug);
     		}
     	else {
+    		const runningCordova = !!window.cordova
     		this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     		this.scale.minWidth = v.gameWidth/2;
     		this.scale.minHeight = v.gameHeight/2;
